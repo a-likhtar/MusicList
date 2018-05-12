@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicList", "MusicList.csproj", "{B5FE715F-AB99-4FA6-AEC1-D3B644C76DF7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicList.Web", "MusicList.Web.csproj", "{B5FE715F-AB99-4FA6-AEC1-D3B644C76DF7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicList.Application", "..\MusicList.Application\MusicList.Application.csproj", "{F8BAB0EC-EBD3-4D2C-95D8-5D09AD51C099}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "MusicList.Database", "..\MusicList.Database\MusicList.Database.sqlproj", "{1845C005-9B9E-4A25-8AE2-5ABEC4A24B23}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicList.DataAccess", "..\MusicList.DataAccess\MusicList.DataAccess.csproj", "{FD4549B1-9F20-4245-836B-5A38D022552E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicList.DataAccess", "..\MusicList.DataAccess\MusicList.DataAccess.csproj", "{FD4549B1-9F20-4245-836B-5A38D022552E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicList.CrosscuttingConcerns", "..\MusicList.CrosscuttingConcerns\MusicList.CrosscuttingConcerns.csproj", "{89E04566-BBFC-4877-A04D-A6583187458A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicList.CrosscuttingConcerns", "..\MusicList.CrosscuttingConcerns\MusicList.CrosscuttingConcerns.csproj", "{89E04566-BBFC-4877-A04D-A6583187458A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
