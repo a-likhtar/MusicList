@@ -12,10 +12,15 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using MusicList.Application.Misc;
+using MusicList.Application.Services;
+using MusicList.Application.Services.Contracts;
 using MusicList.CrosscuttingConcerns;
 using MusicList.DataAccess;
 using MusicList.DataAccess.DbEntities.Auth;
+using MusicList.DataAccess.Repositories;
+using MusicList.DataAccess.Repositories.Contracts;
 using Newtonsoft.Json.Serialization;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace Vue2Spa
 {
@@ -36,7 +41,9 @@ namespace Vue2Spa
             services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
-            ;
+            services.AddScoped<ITracksRepository, TracksRepository>();
+            services.AddScoped<ITracksService, TracksService>();
+
             services.AddAuthentication(o =>
             {
                 o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -77,6 +84,20 @@ namespace Vue2Spa
 
                 };
             });
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "Music List Api", Version = "v1" });
+                //c.OperationFilter<FileUploadOperation>();
+                c.AddSecurityDefinition("Bearer", new ApiKeyScheme
+                {
+                    In = "header",
+                    Description = "Please insert JWT with Bearer into field",
+                    Name = "Authorization",
+                    Type = "apiKey"
+                });
+            });
+
             services.AddMvc(options =>
             {
                 options.Conventions.Add(new ComplexTypeConvention());
@@ -94,10 +115,14 @@ namespace Vue2Spa
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
-
+            app.UseSwagger();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Music List Api");
+                });
 
                 // Webpack initialization with hot-reload.
                 app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
@@ -108,9 +133,17 @@ namespace Vue2Spa
             else
             {
                 app.UseExceptionHandler("/Home/Error");
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/api/swagger/v1/swagger.json", "Music List Api");
+                });
+
             }
-            app.UseAuthentication();
+            app.UseCors(
+                options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials()
+            );
             app.UseStaticFiles();
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

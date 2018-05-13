@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using MusicList.DataAccess.DbEntities;
 using MusicList.DataAccess.DbEntities.Auth;
 using System;
 using System.Collections.Generic;
@@ -13,5 +14,7 @@ namespace MusicList.DataAccess
         {
 
         }
+
+        public DbSet<Track> Tracks { get; set; }
     }
 }
